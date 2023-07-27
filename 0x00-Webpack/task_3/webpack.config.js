@@ -47,6 +47,7 @@ module.exports = {
   ],
   devServer: {
     // Add any additional devServer configuration as needed
+    contentBase: path.resolve(__dirname, "public"),
     port: 8564,
     hot: true, // Enable hot module replacement (HMR)
     historyApiFallback: true, // For SPA to fallback to index.html on 404
