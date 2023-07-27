@@ -1,22 +1,34 @@
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require("path");
+
 module.exports = {
   mode: "development",
+  devtool: "inline-source-map",
   entry: {
-    header: path.resolve(__dirname, "./modules/header/header.js"),
-    body: path.resolve(__dirname, "./modules/body/body.js"),
-    footer: path.resolve(__dirname, "./modules/footer/footer.js"),
-    main: path.resolve(__dirname, "./js/dashboard_main.js"),
+    header: "./modules/header/header.js",
+    body: "./modules/body/body.js",
+    footer: "./modules/footer/footer.js",
   },
   performance: {
     maxAssetSize: 1000000,
+    hints: false,
+    maxEntrypointSize: 1000000,
   },
-  devtool: "inline-source-map",
+  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin()],
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
+  devServer: {
+    static: path.join(__dirname, "./public"),
+    compress: true,
+    port: 8564,
+  },
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "public"),
-    publicPath: "/", // This is the new property for serving static content
   },
   module: {
     rules: [
@@ -31,25 +43,12 @@ module.exports = {
           {
             loader: "image-webpack-loader",
             options: {
-              bypassOnDebug: true,
-              disable: true,
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
             },
           },
         ],
       },
     ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html"),
-    }),
-    new CleanWebpackPlugin(), // Clean build folder on each build
-  ],
-  devServer: {
-    // Add any additional devServer configuration as needed
-    contentBase: path.resolve(__dirname, "public"),
-    port: 8564,
-    hot: true, // Enable hot module replacement (HMR)
-    historyApiFallback: true, // For SPA to fallback to index.html on 404
   },
 };
