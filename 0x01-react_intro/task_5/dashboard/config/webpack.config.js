@@ -1,18 +1,47 @@
-// webpack.config.js
+
 const path = require("path");
 
+// module.exports = {
+//   mode: "development",
+//   entry: path.resolve(__dirname, "../src/index.js"),
+//   output: {
+//     filename: "bundle.js",
+//     path: path.resolve(__dirname, "../dist"),
+//   },
+//   devtool: "inline-source-map",
+//   devServer: {
+//     static: path.resolve(__dirname, "../dist"),
+//     hot: true,
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.css$/i,
+//         use: ["style-loader", "css-loader"],
+//       },
+//       {
+//         test: /\.(png|jpe?g|gif|svg)$/i,
+//         use: [
+//           {
+//             loader: "file-loader",
+//             options: {
+//               outputPath: "images",
+//             },
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// };
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 module.exports = {
-  mode: "development",
   entry: path.resolve(__dirname, "../src/index.js"),
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "../dist"),
+    // path: path.resolve(__dirname, "../dist"),
   },
-  devtool: "inline-source-map",
-  devServer: {
-    static: path.resolve(__dirname, "../dist"),
-    hot: true,
-  },
+  mode: "development",
   module: {
     rules: [
       {
@@ -20,16 +49,42 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        // type: 'asset/resource',
         use: [
+          "file-loader",
           {
-            loader: "file-loader",
+            loader: "image-webpack-loader",
             options: {
-              outputPath: "images",
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
             },
           },
         ],
       },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        // use: ['babel-loader'],
+      },
     ],
   },
+  resolve: {
+    extensions: ["*", ".js", ".jsx"],
+  },
+  devServer: {
+    static: "./dist",
+    compress: true,
+    open: true,
+    hot: true,
+    port: 8564,
+  },
+  devtool: "inline-source-map",
+  plugins: [
+    new HtmlWebpackPlugin({
+      name: "index.html",
+      inject: false,
+      template: "./dist/index.html",
+    }),
+  ],
 };
