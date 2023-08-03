@@ -2,6 +2,7 @@ import React from "react";
 import { NotificationItemShape } from "./NotificationItemShape";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
+// import closeIcon from "../close-icon.png";
 
 const Notifications = ({ displayDrawer, listNotifications }) => {
   const handleButtonClick = () => {
@@ -48,7 +49,7 @@ const Notifications = ({ displayDrawer, listNotifications }) => {
               }}
             >
               {/* Uncomment for visuals */}
-              {/* <img src={closeIcon} alt="Close" /> */}
+              <img src="../close-icon.png" alt="Close" />
               Close
             </button>
           </div>
