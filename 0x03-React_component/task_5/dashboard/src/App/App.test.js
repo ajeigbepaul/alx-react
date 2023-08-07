@@ -2,11 +2,7 @@ import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 configure({ adapter: new Adapter() });
-import "../../config/setupTests"
-// import "../../setupTests";
 
-// Import beforeEach from jest-circus
-import { beforeEach } from 'jest-circus';
 import App from "./App";
 import Notifications from "../Notifications/Notifications";
 import Footer from "../Footer/Footer";
@@ -71,9 +67,6 @@ describe("App when isLoggedIn is true", () => {
     const wrapper = shallow(<App isLoggedIn={true} />);
     expect(wrapper.find(CourseList).exists()).toBe(true);
   });
-});
-beforeEach(() => {
-  window.alert = jest.fn();
 });
 describe("App Class", () => {
   it("should call logOut function and display alert when Control and H keys are pressed", () => {

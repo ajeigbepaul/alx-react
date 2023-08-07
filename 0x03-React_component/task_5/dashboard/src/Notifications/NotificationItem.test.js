@@ -3,6 +3,7 @@ import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 configure({ adapter: new Adapter() });
 import NotificationItem from "./NotificationItem";
+
 describe("NotificationItem Component", () => {
   it("should render without crashing", () => {
     shallow(<NotificationItem type="default" value="Test Value" />);
@@ -32,5 +33,28 @@ describe("NotificationItem Component", () => {
     const renderedHTML = wrapper.find("div").prop("dangerouslySetInnerHTML");
 
     expect(renderedHTML).toEqual({ __html: htmlContent });
+  });
+
+  it("should call the markAsRead function with the correct ID when li is clicked", () => {
+    // Create a spy for the markAsRead function
+    const mockMarkAsRead = jest.fn();
+
+    // Create a notification with an ID
+    const notification = { id: 1, type: "default", value: "Test Value" };
+
+    // Render the NotificationItem with the mockMarkAsRead as the markAsRead prop
+    const wrapper = shallow(
+      <NotificationItem
+        type={notification.type}
+        value={notification.value}
+        markAsRead={mockMarkAsRead}
+      />
+    );
+
+    // Simulate a click on the li element
+    wrapper.find("li").simulate("click");
+
+    // Check if the mockMarkAsRead function is called with the correct ID argument
+    expect(mockMarkAsRead).toHaveBeenCalledWith(notification.id);
   });
 });

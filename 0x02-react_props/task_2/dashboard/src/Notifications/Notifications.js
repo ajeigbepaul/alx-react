@@ -1,4 +1,6 @@
 import React from "react";
+// dont forget to comment this out for the test to pass
+// import closeIcon from "../close-icon.png";
 import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
 // import "./Notifications.css";
