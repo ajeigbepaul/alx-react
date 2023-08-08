@@ -5,11 +5,20 @@ import { StyleSheet, css } from "aphrodite";
 const styles = StyleSheet.create({
   defaultItem: {
     color: "black",
+    width: "100%",            // Take the entire screen width
+    borderBottom: "1px solid black", // Display a black border at the bottom
+    fontSize: "20px",         // Set font size
+    padding: "10px 8px",      // Set padding
   },
   urgentItem: {
     color: "red",
     fontWeight: "bold",
+    width: "100%",            // Take the entire screen width
+    borderBottom: "1px solid black", // Display a black border at the bottom
+    fontSize: "20px",         // Set font size
+    padding: "10px 8px",      // Set padding
   },
+
 });
 
 

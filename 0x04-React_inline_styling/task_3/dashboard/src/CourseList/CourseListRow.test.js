@@ -1,7 +1,6 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import { render } from "@testing-library/react";
 import CourseListRow from "./CourseListRow";
 import { StyleSheetTestUtils } from "aphrodite/no-important";
 // Suppress style injections during testing
@@ -15,11 +14,15 @@ describe("CourseListRow Component", () => {
       isHeader: true,
       textFirstCell: "Available courses",
     };
-    const { container } = render(<CourseListRow {...props} />);
-
-    // Test for the presence of Aphrodite class names
-    expect(container.querySelector(".headerRow")).toBeInTheDocument();
-    expect(container.querySelector(".cell")).toBeInTheDocument();
+    const wrapper = shallow(<CourseListRow {...props} />);
+    const expectedStyles = {
+      backgroundColor: "#deb5b545",
+      // Add any other expected styles for the header row here
+    };
+    const renderedStyles = StyleSheetTestUtils.getRenderedStyles(
+      wrapper.getElement()
+    );
+    expect(renderedStyles).toMatchObject(expectedStyles);
   });
 
   it("should render a regular row with correct inline styles", () => {
@@ -28,10 +31,14 @@ describe("CourseListRow Component", () => {
       textFirstCell: "ES6",
       textSecondCell: "60",
     };
-    const { container } = render(<CourseListRow {...props} />);
-
-    // Test for the presence of Aphrodite class names
-    expect(container.querySelector(".defaultRow")).toBeInTheDocument();
-    expect(container.querySelectorAll(".cell")).toHaveLength(2); // Two cells in a regular row
+    const wrapper = shallow(<CourseListRow {...props} />);
+    const expectedStyles = {
+      backgroundColor: "#f5f5f5ab",
+      // Add any other expected styles for the regular row here
+    };
+    const renderedStyles = StyleSheetTestUtils.getRenderedStyles(
+      wrapper.getElement()
+    );
+    expect(renderedStyles).toMatchObject(expectedStyles);
   });
 });
