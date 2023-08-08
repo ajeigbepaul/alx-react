@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NotificationItem from "./NotificationItem";
-import { StyleSheet, css, keyframes } from "aphrodite";
+import { StyleSheet, css } from "aphrodite";
 
-const fadeIn = keyframes({
+
+// Define the animations using Aphrodite's helper function
+const fadeIn = {
   "0%": { opacity: 0.5 },
   "100%": { opacity: 1 },
-});
+};
 
-const bounce = keyframes({
+const bounce = {
   "0%, 100%": { transform: "translateY(0px)" },
   "50%": { transform: "translateY(-5px)" },
-});
+};
 
 // import "./Notifications.css";
 const styles = StyleSheet.create({

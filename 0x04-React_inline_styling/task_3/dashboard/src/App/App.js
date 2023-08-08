@@ -105,7 +105,7 @@ class App extends Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
   displayDrawer: PropTypes.bool,
-  logOut: PropTypes.func.isRequired,
+  // logOut: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {

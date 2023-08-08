@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from "aphrodite";
-
+import logo from "../assets/logo.jpg";
 const styles = StyleSheet.create({
   header: {
     textAlign: "center",
@@ -25,7 +25,7 @@ function Header() {
   return (
     <>
       {/* <img src="../assets/logo.jpg" className="App-logo" alt="logo" /> */}
-      <img src="../assets/logo.jpg" className={css(styles.logo)} alt="logo" />
+      <img src={logo} className={css(styles.logo)} alt="logo" />
       <h1 className={css(styles.header, styles.title)}>School dashboard</h1>
     </>
   );
