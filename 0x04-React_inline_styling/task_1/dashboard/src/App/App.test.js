@@ -2,7 +2,9 @@ import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 configure({ adapter: new Adapter() });
-
+import { StyleSheetTestUtils } from "aphrodite";
+// Suppress style injections during testing
+StyleSheetTestUtils.suppressStyleInjection();
 import App from "./App";
 import Notifications from "../Notifications/Notifications";
 import Footer from "../Footer/Footer";
