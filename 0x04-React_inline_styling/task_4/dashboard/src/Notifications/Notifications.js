@@ -3,10 +3,31 @@ import PropTypes from "prop-types";
 import NotificationItem from "./NotificationItem";
 import { StyleSheet, css } from "aphrodite";
 
+
+// Define the animations using Aphrodite's helper function
+const fadeIn = {
+  "0%": { opacity: 0.5 },
+  "100%": { opacity: 1 },
+};
+
+const bounce = {
+  "0%, 100%": { transform: "translateY(0px)" },
+  "50%": { transform: "translateY(-5px)" },
+};
+
+// import "./Notifications.css";
 const styles = StyleSheet.create({
   notificationsContainer: {
     display: "flex",
     alignItems: "center",
+    position: "fixed", // Ensure the panel takes over the entire screen
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    padding: 0, // Remove padding
+    backgroundColor: "white", // Set background color
+    fontSize: "20px", // Set font size
   },
   notificationsList: {
     marginRight: "20px",
@@ -16,6 +37,22 @@ const styles = StyleSheet.create({
     border: "none",
     backgroundColor: "transparent",
     cursor: "pointer",
+  },
+  menuItem: {
+    float: "right",
+    backgroundColor: "#fff8f8",
+    cursor: "pointer",
+    animationName: fadeIn,
+    animationDuration: "1s",
+    animationIterationCount: 3,
+    ":hover": {
+      animationName: bounce,
+      animationDuration: "0.5s",
+      animationIterationCount: 3,
+    },
+  },
+  menuItemHidden: {
+    display: "none",
   },
 });
 
