@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NotificationItem from "./NotificationItem";
 import { StyleSheet, css } from "aphrodite";
-// import "./Notifications.css";
 const styles = StyleSheet.create({
   notificationsContainer: {
     display: "flex",
