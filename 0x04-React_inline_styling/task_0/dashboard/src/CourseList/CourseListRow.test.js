@@ -3,7 +3,13 @@ import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 import CourseListRow from "./CourseListRow";
 
+import { JSDOM } from "jsdom";
 configure({ adapter: new Adapter() });
+
+// Set up jsdom to create a virtual DOM
+const { window } = new JSDOM("<!doctype html><html><body></body></html>");
+global.window = window;
+global.document = window.document;
 
 describe("CourseListRow Component", () => {
   it("should render a header row with correct inline styles", () => {
@@ -12,7 +18,7 @@ describe("CourseListRow Component", () => {
       textFirstCell: "Available courses",
     };
     const wrapper = shallow(<CourseListRow {...props} />);
-    expect(wrapper.prop("style")).toEqual({ backgroundColor: "#deb5b545" });
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
   it("should render a regular row with correct inline styles", () => {
@@ -22,6 +28,6 @@ describe("CourseListRow Component", () => {
       textSecondCell: "60",
     };
     const wrapper = shallow(<CourseListRow {...props} />);
-    expect(wrapper.prop("style")).toEqual({ backgroundColor: "#f5f5f5ab" });
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });

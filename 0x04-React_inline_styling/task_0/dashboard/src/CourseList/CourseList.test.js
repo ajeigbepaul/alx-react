@@ -13,9 +13,10 @@ describe("CourseList Component", () => {
   it("should render the 5 different rows", () => {
     const wrapper = shallow(<CourseList />);
     const courseListRows = wrapper.find(CourseListRow);
-    console.log("checking...", courseListRows)
-    expect(courseListRows).toHaveLength(5);
 
+    // Expect the number of rows to be equal to the number of headers (2)
+    expect(courseListRows).toHaveLength(5);
+    // Check the content of the first two rows (headers)
     const firstRowProps = courseListRows.at(0).props();
     expect(firstRowProps.textFirstCell).toBe("Available courses");
     expect(firstRowProps.isHeader).toBe(true);
