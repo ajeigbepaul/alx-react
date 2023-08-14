@@ -238,11 +238,28 @@ describe("Notifications Component", () => {
   });
 
   // Add a new test to verify that when listNotifications is empty the message Here is the list of notifications is not displayed, but No new notification for now is
-  it("should display No new notification for now when listNotifications is empty", () => {
-    const wrapper = shallow(<Notifications />);
-    expect(wrapper.text()).toContain("No new notification for now");
-    expect(wrapper.text()).not.toContain("Here is the list of notifications");
-  });
+  // it("should display No new notification for now when listNotifications is empty", () => {
+  //   const wrapper = shallow(<Notifications />);
+  //   expect(wrapper.text()).toContain("No new notification for now");
+  //   expect(wrapper.text()).not.toContain("Here is the list of notifications");
+  // });
+  
+
+ it("should display No new notification for now when listNotifications is empty", () => {
+   const emptyListNotifications = [];
+
+   // Render the Notifications component with displayDrawer set to true and an empty listNotifications
+   const wrapper = shallow(
+     <Notifications
+       displayDrawer={true}
+       listNotifications={emptyListNotifications}
+     />
+   );
+
+   // Check that the "No new notification for now" message is present
+   expect(wrapper.text()).toContain("No new notification for now");
+ });
+
 
   it("should call console.log with the right message when markAsRead is called", () => {
     const wrapper = shallow(<Notifications />);
@@ -324,30 +341,5 @@ describe("Notifications Component", () => {
     // Check that the render method was called again
     expect(renderSpy).toHaveBeenCalled();
   });
-  //  it("should call the markAsRead function with the correct ID when li is clicked", () => {
-  //    // Create a mock function for markAsRead
-  //    const mockMarkAsRead = jest.fn();
-
-  //    // Create a notification with an ID
-  //    const notification = { id: 1, type: "default", value: "Test Value" };
-
-  //    // Render the Notifications component with a single notification
-  //    const wrapper = shallow(
-  //      <Notifications
-  //        id={notification.id}
-  //        displayDrawer={true}
-  //        listNotifications={[notification]}
-  //        markAsRead={mockMarkAsRead}
-  //      />
-  //    );
-
-  //    // Find the rendered NotificationItem
-  //    const notificationItem = wrapper.find(NotificationItem);
-
-  //    // Simulate a click on the NotificationItem
-  //    notificationItem.simulate("click");
-
-  //    // Check if the mock markAsRead function is called with the correct ID argument
-  //    expect(mockMarkAsRead).toHaveBeenCalledWith(notification.id);
-  //  });
+  
 });

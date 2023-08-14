@@ -65,9 +65,15 @@ class Notifications extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (
+    // Check if the listNotifications prop exists and has a length property
+    const listNotificationsChanged =
+      nextProps.listNotifications &&
+      this.props.listNotifications &&
       nextProps.listNotifications.length !==
-        this.props.listNotifications.length ||
+        this.props.listNotifications.length;
+
+    return (
+      listNotificationsChanged ||
       nextProps.displayDrawer !== this.props.displayDrawer
     );
   }
@@ -84,6 +90,7 @@ class Notifications extends Component {
 
   render() {
     const { displayDrawer, listNotifications } = this.props;
+    const hasNotifications = listNotifications && listNotifications.length > 0;
 
     return (
       <>
@@ -93,24 +100,21 @@ class Notifications extends Component {
         {displayDrawer && (
           <div className={css(styles.notificationsContainer)}>
             <div className={css(styles.notificationsList)}>
-              <p>Here is the list of notifications </p>
+              {listNotifications.length === 0 ? (
+                <p>No new notification for now</p>
+              ) : (
+                <p>Here is the list of notifications</p>
+              )}
               <ul>
-                {listNotifications.length === 0 ? (
+                {listNotifications.map((notification) => (
                   <NotificationItem
-                    type="default"
-                    value="No new notification for now"
+                    key={notification.id}
+                    type={notification.type}
+                    html={notification.html}
+                    value={notification.value}
+                    markAsRead={() => this.markAsRead(notification.id)}
                   />
-                ) : (
-                  listNotifications.map((notification) => (
-                    <NotificationItem
-                      key={notification.id}
-                      type={notification.type}
-                      html={notification.html}
-                      value={notification.value}
-                      markAsRead={() => this.markAsRead(notification.id)}
-                    />
-                  ))
-                )}
+                ))}
               </ul>
             </div>
             <div className={css(styles.closeButton)}>
@@ -127,6 +131,7 @@ class Notifications extends Component {
 // Add a default prop value for displayDrawer (false by default)
 Notifications.defaultProps = {
   displayDrawer: false,
+  listNotifications: [],
   handleDisplayDrawer: () => {}, // Default empty function
   handleHideDrawer: () => {}, // Default empty function
 };
@@ -134,7 +139,17 @@ Notifications.defaultProps = {
 // Define the prop types for the Notifications component
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
-  listNotifications: PropTypes.arrayOf(NotificationItem.propTypes),
+  // listNotifications: PropTypes.arrayOf(NotificationItem.propTypes),
+  listNotifications: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      html: PropTypes.shape({
+        __html: PropTypes.string.isRequired,
+      }),
+    })
+  ),
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
 };

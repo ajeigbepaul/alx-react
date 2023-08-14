@@ -108,7 +108,7 @@ App.propTypes = {
 
 App.defaultProps = {
   isLoggedIn: false,
-  displayDrawer: true,
+  displayDrawer: false,
 };
 
 export default App;

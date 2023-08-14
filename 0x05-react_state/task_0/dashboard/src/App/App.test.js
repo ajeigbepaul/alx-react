@@ -28,29 +28,19 @@ describe("App Component", () => {
     const wrapper = shallow(<App />);
     expect(wrapper.exists()).toBe(true);
   });
-
-  // // Test cases for various elements within the App component
-  // test("renders a header with the class App-header", () => {
-  //  const wrapper = shallow(<App />);
-  //  console.log(wrapper.debug()); // Print the component's debug output
-  //  console.log(wrapper.find("header.App-header").debug()); // Print the specific element's debug output
-  //  expect(wrapper.find("header.App-header").exists()).toBe(true);
-  // });
-
-  // test("renders a div with the class App-body", () => {
-  //   const wrapper = shallow(<App />);
-  //   expect(wrapper.find("div.App-body").exists()).toBe(true);
-  // });
-
-  // test("renders a div with the class App-footer", () => {
-  //   const wrapper = shallow(<App />);
-  //   expect(wrapper.find("div.App-footer").exists()).toBe(true);
-  // });
-
-  // Test cases to check if specific components are rendered
-  test("renders the Notifications component", () => {
-    const wrapper = shallow(<App />);
+  test("renders the Notifications component when displayDrawer is true", () => {
+    const wrapper = shallow(<App displayDrawer={true} />);
+    // Ensure that the Notifications component is rendered
     expect(wrapper.find(Notifications).exists()).toBe(true);
+
+    // Check if the handleDisplayDrawer method sets displayDrawer to true
+    const appInstance = wrapper.instance();
+    appInstance.handleDisplayDrawer();
+    expect(appInstance.state.displayDrawer).toBe(true);
+
+    // Check if the handleHideDrawer method sets displayDrawer to false
+    appInstance.handleHideDrawer();
+    expect(appInstance.state.displayDrawer).toBe(false);
   });
 
   test("renders the Header component", () => {
@@ -90,11 +80,28 @@ describe("App Component", () => {
   });
 
   // Test case: Default state for displayDrawer is false
+  // test("default state for displayDrawer is false", () => {
+  //   const wrapper = shallow(<App />);
+  //   const appInstance = wrapper.instance();
+  //   appInstance.handleDisplayDrawer();
+  //   expect(appInstance.state.displayDrawer).toBe(false);
+  // });
   test("default state for displayDrawer is false", () => {
     const wrapper = shallow(<App />);
     const appInstance = wrapper.instance();
+
+    // Verify that the initial displayDrawer state matches the default prop value
+    expect(wrapper.state("displayDrawer")).toBe(false);
+
+    // Check if handleDisplayDrawer sets displayDrawer to true
+    appInstance.handleDisplayDrawer();
+    expect(appInstance.state.displayDrawer).toBe(true);
+
+    // Check if handleHideDrawer sets displayDrawer to false
+    appInstance.handleHideDrawer();
     expect(appInstance.state.displayDrawer).toBe(false);
   });
+
 
   // Test case: Calling handleDisplayDrawer updates state to true
   test("calling handleDisplayDrawer updates state to true", () => {
@@ -112,24 +119,6 @@ describe("App Component", () => {
     appInstance.handleHideDrawer();
     expect(appInstance.state.displayDrawer).toBe(false);
   });
-
-  // Additional test cases related to App Class
-  // describe("when logOut function is called", () => {
-  //   it("should display alert", () => {
-  //     const mockLogOut = jest.fn();
-  //     const mockAlert = jest.spyOn(window, "alert");
-
-  //     const wrapper = shallow(<App logOut={mockLogOut} />);
-  //     // Assuming that the handleKeyDown function is triggered when the user presses Ctrl+H
-  //     wrapper.instance().handleKeyDown({ ctrlKey: true, key: "h" });
-
-  //     expect(mockAlert).toHaveBeenCalledWith("Logging you out");
-  //   });
-
-  //   afterEach(() => {
-  //     jest.restoreAllMocks();
-  //   });
-  // });
   describe("when logOut function is called", () => {
     it("should display alert", () => {
       // Create a mock function for alert
