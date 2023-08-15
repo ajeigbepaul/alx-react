@@ -15,18 +15,20 @@ function printBestStudents(grades) {
   console.log(JSON.stringify(filteredGrades, null, 2));
 }
 
-// Example usage
-const grades = {
-  1: {
-    score: 99,
-    firstName: "guillaume",
-    lastName: "salva",
-  },
-  2: {
-    score: 65,
-    firstName: "john",
-    lastName: "doe",
-  },
-};
+export default printBestStudents
 
-printBestStudents(grades);
+// // Example usage
+// const grades = {
+//   1: {
+//     score: 99,
+//     firstName: "guillaume",
+//     lastName: "salva",
+//   },
+//   2: {
+//     score: 65,
+//     firstName: "john",
+//     lastName: "doe",
+//   },
+// };
+
+// printBestStudents(grades);
