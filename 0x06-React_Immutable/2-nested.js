@@ -1,10 +1,9 @@
 export default function accessImmutableObject(object, array) {
-  let currentValue = object;
+  let currentValue = new Map(Object.entries(object));
 
   for (const key of array) {
-    if (currentValue && currentValue.hasOwnProperty(key)) {
-      currentValue = currentValue[key];
-    } else {
+    currentValue = currentValue.get(key);
+    if (currentValue === undefined) {
       return undefined; // Return undefined if the path is not valid
     }
   }
@@ -12,12 +11,14 @@ export default function accessImmutableObject(object, array) {
   return currentValue;
 }
 
-const result = accessImmutableObject({
-  name: {
-    first: "Guillaume",
-    last: "Salva"
-  }
-}, ['name', 'first']);
+const result = accessImmutableObject(
+  {
+    name: {
+      first: "Guillaume",
+      last: "Salva",
+    },
+  },
+  ["name", "first"]
+);
 
 console.log(result); // Output: Guillaume
-
