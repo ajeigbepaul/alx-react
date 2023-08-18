@@ -1,4 +1,4 @@
-import { fromJS } from "immutable";
+import { fromJS } from 'immutable';
 
 function accessImmutableObject(object, array) {
   return fromJS(object).getIn(array, undefined);
