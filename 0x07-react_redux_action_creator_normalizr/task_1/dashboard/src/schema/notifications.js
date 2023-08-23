@@ -1,33 +1,21 @@
-import { schema } from "normalizr";
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable eol-last */
+/* eslint-disable quotes */
+/* eslint-disable semi */
+import * as notificationsData from "../../notifications.json";
+import { normalize, schema } from "normalizr";
 
-// Define user entity
 const user = new schema.Entity("users");
-
-// Define message entity
-const message = new schema.Entity(
-  "messages",
-  {},
-  {
-    idAttribute: "guid",
-  }
-);
-
-// Define notification entity
+const message = new schema.Entity("messages", {}, { idAttribute: "guid" });
 const notification = new schema.Entity("notifications", {
   author: user,
   context: message,
 });
-// Create a function to get all notifications by user
+
+const normalized = normalize(notificationsData, [notification]);
+
 export function getAllNotificationsByUser(userId) {
-  const userNotifications = [];
-
-  for (const notification of notificationData.default) {
-    if (notification.author.id === userId) {
-      userNotifications.push(notification.context);
-    }
-  }
-
-  return userNotifications;
+  return notificationsData.filter((obj) => obj.author.id === userId);
 }
-export { user, message, notification };
 
+export { normalized };

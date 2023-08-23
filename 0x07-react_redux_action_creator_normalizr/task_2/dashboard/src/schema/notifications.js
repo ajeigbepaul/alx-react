@@ -1,37 +1,28 @@
-import { schema, normalize } from "normalizr";
-import { normalizedNotifications } from "./notifications"; 
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable eol-last */
+/* eslint-disable quotes */
+/* eslint-disable semi */
+import * as notificationsData from "../../notifications.json";
+import { normalize, schema } from "normalizr";
+
 const user = new schema.Entity("users");
-
-const message = new schema.Entity(
-  "messages",
-  {},
-  {
-    idAttribute: "guid",
-  }
-);
-
+const message = new schema.Entity("messages", {}, { idAttribute: "guid" });
 const notification = new schema.Entity("notifications", {
   author: user,
   context: message,
 });
 
-// Your notifications data
-const rawData = [
-  // ... raw data objects
-];
+const normalized = normalize(notificationsData, [notification]);
 
-// Normalize the data using the notification schema
-const normalizedData = normalize(rawData, [notification]);
-
-// Export the normalized data
-export const normalizedNotifications = normalizedData.entities;
-// / Create a function to get all notifications by user
 export function getAllNotificationsByUser(userId) {
-  const userNotifications = normalizedNotifications.notifications;  // Access normalized notifications
-
-  const contextObjects = Object.values(userNotifications)
-    .filter(notification => notification.author === userId)
-    .map(notification => normalizedNotifications.messages[notification.context]);
-
-  return contextObjects;
+  const userNot = normalized.entities.notifications;
+  const normalizedDataSet = [];
+  for (const id in userNot) {
+    if (userNot[id].author === userId) {
+      normalizedDataSet.push(userNot[id].author);
+    }
+  }
+  return normalizedDataSet;
 }
+
+export { normalized };

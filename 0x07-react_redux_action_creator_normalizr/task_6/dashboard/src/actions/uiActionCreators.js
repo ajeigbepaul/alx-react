@@ -1,5 +1,3 @@
-// actions/uiActionCreators.js
-import { connect } from "react-redux";
 import {
   LOGIN,
   LOGOUT,
@@ -7,29 +5,42 @@ import {
   HIDE_NOTIFICATION_DRAWER,
 } from "./uiActionTypes";
 
-export const login = (email, password) => ({
-  type: LOGIN,
-  user: { email, password },
-});
-
-export const logout = () => ({
-  type: LOGOUT,
-});
-
-export const displayNotificationDrawer = () => ({
-  type: DISPLAY_NOTIFICATION_DRAWER,
-});
-
-export const hideNotificationDrawer = () => ({
-  type: HIDE_NOTIFICATION_DRAWER,
-});
-const mapDispatchToProps = (dispatch) => {
+export function login(email, password) {
   return {
-    boundLogin: (email, password) => dispatch(login(email, password)),
-    boundLogout: () => dispatch(logout()),
-    boundDisplayNotificationDrawer: () => dispatch(displayNotificationDrawer()),
-    boundHideNotificationDrawer: () => dispatch(hideNotificationDrawer()),
+    type: LOGIN,
+    payload: {
+      user: {
+        email,
+        password,
+      },
+    },
   };
-};
+}
 
-export default connect(null, mapDispatchToProps)(YourComponent);
+export const boundlogin = (email, password) => dispatch(login(email, password));
+
+export function logout() {
+  return {
+    type: LOGOUT,
+  };
+}
+
+export const boundlogout = () => dispatch(logout());
+
+export function displayNotificationDrawer() {
+  return {
+    type: DISPLAY_NOTIFICATION_DRAWER,
+  };
+}
+
+export const bounddisplayNotificationDrawer = () =>
+  dispatch(displayNotificationDrawer);
+
+export function hideNotificationDrawer() {
+  return {
+    type: HIDE_NOTIFICATION_DRAWER,
+  };
+}
+
+export const boundhideNotificationDrawer = () =>
+  dispatch(hideNotificationDrawer());
